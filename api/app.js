@@ -4,14 +4,22 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var dotenv = require('dotenv').config() 
-
+var cors = require("cors");
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var testAPIRouter = require("./routes/testAPI");
-
+var messagingRouter = require("./routes/messaging")
 
 var app = express();
+const bodyParser = require('body-parser');
+
+// Add this line to parse JSON bodies
+app.use(bodyParser.json());
+app.use(cors());
+
+
 app.use("/testAPI", testAPIRouter);
+app.use("/messaging", messagingRouter);
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Credentials", "true");
